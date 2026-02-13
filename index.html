@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clara</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 80px;
+      background-color: #fce4ec;
+      overflow: hidden;
+    }
+    h1 {
+      color: #d81b60;
+      font-size: 3em;
+      margin-bottom: 20px;
+    }
+    p {
+      font-size: 1.5em;
+      margin-bottom: 40px;
+      color: #880e4f;
+    }
+    button {
+      padding: 20px 40px;
+      margin: 20px;
+      font-size: 22px;
+      cursor: pointer;
+      border-radius: 12px;
+      border: none;
+      transition: all 0.3s;
+      touch-action: manipulation;
+    }
+    #yes {
+      background-color: #4caf50;
+      color: white;
+    }
+    #no {
+      background-color: #f44336;
+      color: white;
+      position: relative;
+    }
+
+    /* Heart animation */
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: #e91e63;
+      transform: rotate(-45deg);
+      animation: float 5s linear infinite;
+    }
+    .heart::before,
+    .heart::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: #e91e63;
+      border-radius: 50%;
+    }
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+    .heart::after {
+      left: 10px;
+      top: 0;
+    }
+    @keyframes float {
+      0% { transform: translateY(100vh) rotate(-45deg); opacity: 1; }
+      100% { transform: translateY(-50vh) rotate(-45deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Clara</h1>
+  <p>Will you be my Valentine?</p>
+  <button id="yes">Da</button>
+  <button id="no">Nu</button>
+
+  <script>
+    const yesBtn = document.getElementById('yes');
+    const noBtn = document.getElementById('no');
+    let noClicked = false;
+
+    function getRandomPosition() {
+      const x = Math.random() * (window.innerWidth - 100);
+      const y = Math.random() * (window.innerHeight - 100);
+      return {x, y};
+    }
+
+    noBtn.addEventListener('click', () => {
+      if (!noClicked) {
+        alert("Ești sigură?");
+        noClicked = true;
+        const pos = getRandomPosition();
+        noBtn.style.position = 'absolute';
+        noBtn.style.top = pos.y + "px";
+        noBtn.style.left = pos.x + "px";
+      } else {
+        noBtn.style.top = "-1000px";
+        noBtn.style.left = "-1000px";
+        alert("Haha, acum nu poți apăsa Nu! 😄");
+      }
+    });
+
+    yesBtn.addEventListener('click', () => {
+      alert("Mă bucur că ai spus DA! ❤️");
+    });
+
+    // Add animated hearts
+    function createHeart() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.style.left = Math.random() * window.innerWidth + 'px';
+      heart.style.width = 15 + Math.random() * 20 + 'px';
+      heart.style.height = heart.style.width;
+      heart.style.animationDuration = 4 + Math.random() * 3 + 's';
+      document.body.appendChild(heart);
+      setTimeout(() => {
+        heart.remove();
+      }, 7000);
+    }
+
+    setInterval(createHeart, 300);
+  </script>
+</body>
+</html>
